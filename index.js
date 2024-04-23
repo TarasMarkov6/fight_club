@@ -1,5 +1,4 @@
-//const API_URL = 'https://api.github.com/repos/TarasMarkov6/training/contents/fighters.json';
-//const token = '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';
+const API_URL = 'https://api.github.com/repos/TarasMarkov6/training/contents/fighters.json';
 
 const SECURITY_HEADERS = {
   headers: {
