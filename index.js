@@ -1,11 +1,5 @@
 const API_URL = 'https://api.github.com/repos/TarasMarkov6/training/contents/fighters.json';
 
-const SECURITY_HEADERS = {
-  headers: {
-    Authorization: `token ${token}`
-  }
-};
-
 const promise = fetch(API_URL, SECURITY_HEADERS);
 console.log(promise);
 promise.then(response => {
