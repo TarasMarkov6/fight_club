@@ -1,5 +1,5 @@
 const API_URL = 'https://api.github.com/repos/TarasMarkov6/training/contents/fighters.json';
-const token = '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';
+const token = '';
 
 const SECURITY_HEADERS = {
   headers: {
