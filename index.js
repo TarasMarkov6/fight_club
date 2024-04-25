@@ -1,33 +1,39 @@
-const API_URL = 'https://api.github.com/repos/TarasMarkov6/training/contents/fighters.json';
-const token = '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';
-
+const BASE_API_URL = 'https://api.github.com/'; 
 const SECURITY_HEADERS = {
   headers: {
-    Authorization: `token ${token}`
+    authorization: ""
   }
 };
 
 const rootElement = document.getElementById('root');
-rootElement.innerText = 'Loading...';
+const loadingElement = document.getElementById('loading-overlay');
 
-fetch(API_URL, SECURITY_HEADERS)
-  .then(response => {
-    if (!response.ok) {
-      //throw new Error ('Failed to load data');
-      return Promise.reject(new Error ('Failed to load data'));
+function callApi(endpoint, method = 'GET') {
+  const url = BASE_API_URL + endpoint;
+  const options = { method, ...SECURITY_HEADERS };
+
+  return fetch(url, options)
+    .then(response =>
+      response.ok
+        ? response.json()
+        : Promise.reject(Error('Failed to load'))
+    )
+    .then(file => JSON.parse(atob(file.content)))
+    .catch(error => { throw error });
+}
+
+class FighterService {
+  #endpoint = 'repos/TarasMarkov6/training/contents/fighters.json'
+ 
+  async getFighters() {
+    try {
+      const apiResult = await callApi(this.#endpoint, 'GET');
+      return JSON.parse(atob(apiResult.content));
+    } catch (error) {
+      throw error;
     }
+  }
+ }
+ const fighterService = new FighterService();
 
-    return response.json();
-  })
-
-  .then(file => {
-    const fighters = JSON.parse(atob(file.content));
-    const names = fighters.map(item=>item.name);
-    const namesStr = names.join('\n');
-    rootElement.innerText = namesStr;
-    console.log(namesStr);
-  })
-    .catch(error => {
-    console.warn(error);
-    rootElement.innerText = 'Failed to load data';
-  });
+ Object.setPrototypeOf
